@@ -130,6 +130,13 @@ Pull requests welcome! Common contributions:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
+
+## See also
+
+- [awesome-industrial-modbus](https://github.com/leaberg69/awesome-industrial-modbus) — Curated list of all Modbus tools, libraries, simulators, and resources (lists this project alongside competing alternatives)
+- [aem-modbus-cli](https://github.com/leaberg69/aem-modbus-cli) — Companion CLI for Modbus diagnostics (scan, baudrate detect, retry diagnostics, benchmarking)
+- [aem-iec62443-checklist](https://github.com/leaberg69/aem-iec62443-checklist) — Companion 47-item IEC 62443-4-2 SL2 compliance checklist + validator
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
