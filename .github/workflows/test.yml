@@ -1,0 +1,32 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pymodbus pyserial
+      - name: Import test
+        run: |
+          python -c "import aem_60dc8_slave; print(f\"BAUDRATES: {aem_60dc8_slave.BAUDRATES}\")"
+      - name: Validate examples
+        run: |
+          for f in examples/*.py; do
+            python -c "import ast; ast.parse(open(\"$f\").read())" && echo "OK: $f"
+          done

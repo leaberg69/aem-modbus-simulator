@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aem-modbus-simulator"
+version = "1.0.0"
+description = "Open-source Modbus RTU/TCP slave simulator for the LRI AEM-60DC8 industrial DC monitor — 147 holding registers, 8 DC channels."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+authors = [
+    { name = "LRI Automação Industrial", email = "vendas@lri.com.br" }
+]
+keywords = [
+    "modbus", "modbus-rtu", "modbus-tcp", "scada", "plc",
+    "industrial-automation", "simulator", "dc-monitoring",
+    "rs-485", "battery-monitoring", "iiot"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Manufacturing",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Communications",
+    "Topic :: Scientific/Engineering",
+    "Topic :: System :: Hardware",
+]
+dependencies = [
+    "pymodbus>=3.0.0",
+    "pyserial>=3.5",
+]
+
+[project.urls]
+Homepage = "https://aem.lri.com.br/en-us"
+Documentation = "https://aem.lri.com.br/en-us/modbus"
+Repository = "https://github.com/leaberg69/aem-modbus-simulator"
+Issues = "https://github.com/leaberg69/aem-modbus-simulator/issues"
+Manufacturer = "https://lri.com.br"
+
+[project.scripts]
+aem-simulator = "aem_60dc8_slave:main"
