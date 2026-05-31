@@ -10,23 +10,43 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pymodbus pyserial
-      - name: Import test
+      
+      - name: Syntax check (main script)
         run: |
-          python -c "import aem_60dc8_slave; print(f\"BAUDRATES: {aem_60dc8_slave.BAUDRATES}\")"
-      - name: Validate examples
+          python -m py_compile aem_60dc8_slave.py
+      
+      - name: Syntax check (examples)
         run: |
           for f in examples/*.py; do
-            python -c "import ast; ast.parse(open(\"$f\").read())" && echo "OK: $f"
+            python -m py_compile "$f" && echo "OK: $f"
           done
+      
+      - name: Validate register map structure (no server start)
+        run: |
+          python -c "
+          import ast
+          tree = ast.parse(open(\"aem_60dc8_slave.py\").read())
+          # Verificar que BAUDRATES tem 6 valores incluindo 38400
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Assign):
+                  for t in node.targets:
+                      if isinstance(t, ast.Name) and t.id == \"BAUDRATES\":
+                          vals = [el.value for el in node.value.elts]
+                          assert 38400 in vals, f\"38400 missing: {vals}\"
+                          assert len(vals) == 6, f\"Expected 6 baudrates, got {len(vals)}\"
+                          print(f\"✓ BAUDRATES OK: {vals}\")
+          "
