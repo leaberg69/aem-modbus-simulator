@@ -27,3 +27,20 @@ Cada agente precisa receber no prompt o contexto que não tem como descobrir
 sozinho, o entregável esperado e se pode escrever (padrão: investigação é
 somente leitura). O relatório do subagente não é mostrado ao usuário — a sessão
 principal relata o que importa.
+
+### Custo×benefício: qual modelo usar em cada agente
+
+Ao disparar um subagente, escolha o `model` (parâmetro da ferramenta Agent) pela
+complexidade real da tarefa, não por hábito. Faixa aceita nesta conta: piso
+**Sonnet 5**, teto **Fable 5** — nunca Haiku para tarefa que envolva julgamento.
+
+- **Tarefa mecânica/repetitiva** (editar o mesmo arquivo em N repos, aplicar um
+  patch padronizado, rodar o mesmo comando N vezes): **Sonnet 5**. É
+  leitura+escrita direta, sem julgamento editorial — pagar mais não muda o
+  resultado.
+- **Tarefa que exige julgamento** (decidir vencedor de par duplicado por
+  evidência, escrever ou revisar conteúdo, sintetizar uma recomendação a partir
+  de dados ambíguos): **Opus 5** ou **Fable 5**, conforme a profundidade exigida.
+- Na dúvida, comece em Sonnet 5 e só suba de nível se o resultado voltar raso ou
+  errado — não o contrário. Subir de nível "por garantia" em tarefa mecânica é
+  custo sem ganho.
